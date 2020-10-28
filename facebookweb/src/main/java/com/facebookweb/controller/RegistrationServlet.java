@@ -8,11 +8,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.facebookweb.entity.FacebookProfile;
+import com.facebookweb.service.Service;
+import com.facebookweb.service.ServiceInterface;
+
 /**
  * Servlet implementation class RegistrationServlet
  */
-public class RegistrationServlet extends HttpServlet {
-	
+public class RegistrationServlet extends HttpServlet {	
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -20,14 +23,26 @@ public class RegistrationServlet extends HttpServlet {
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		FacebookProfile newProfile = new FacebookProfile(name, email, password);
+		
+		int status = Service.createObject().createProfile(newProfile);
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-		out.println("<html><body>");
-		out.println("Name is = " + name);
-		out.println("<br>Email is = " + email);
-		out.println("<br>Password is = " + password);
-		out.println("</body></html>");
+		
+		if(status>0) {
+			//OK
+			out.println("<html><body>");
+			out.println("Name is = " + name);
+			out.println("<br>Email is = " + email);
+			out.println("<br>Password is = " + password);
+			out.println("</body></html>");
+		}else {
+			//Error
+			out.println("<html><body>");
+			out.println("Registration unsuccessful! Please try again...");
+			out.println("</body></html>");
+		}
 	}
 
 	

@@ -10,8 +10,18 @@
   	<description></description>
   	<servlet-class>com.facebookweb.controller.RegistrationServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewAllServlet</servlet-name>
+  	<display-name>ViewAllServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.facebookweb.controller.ViewAllServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>RegistrationServlet</servlet-name>
   	<url-pattern>/RegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewAllServlet</servlet-name>
+  	<url-pattern>/ViewAllServlet</url-pattern>
   </servlet-mapping>
 </web-app>

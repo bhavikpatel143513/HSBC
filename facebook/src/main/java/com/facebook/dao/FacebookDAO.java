@@ -39,7 +39,6 @@ public class FacebookDAO implements FacebookDAOInterface {
 
 			//step 4: execute query
 			i = ps.executeUpdate();
-			con.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -107,6 +106,7 @@ public class FacebookDAO implements FacebookDAOInterface {
 			
 			//step 1: load driver
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			
 			//step 2: connection with database
 			//Connection con=DriverManager.getConnection("jdbc:derby:C:\\firstdb1;create=true;user=bhavik;password=bhavik");
 			con=DriverManager.getConnection("jdbc:derby:C:\\Users\\bhavi\\Downloads\\Root\\Coding\\Derby\\first\\firstdb1;create=true;user=bhavik;password=bhavik");
