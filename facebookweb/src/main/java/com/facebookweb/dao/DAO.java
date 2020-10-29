@@ -111,7 +111,28 @@ public class DAO implements DAOInterface{
 	}
 
 	public int deleteProfile(FacebookProfile fp) {
-		return 0;
+		Connection con = null;
+		int status = 0;
+		
+		try {
+			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+			con = DriverManager.getConnection("jdbc:derby:C:\\Users\\bhavi\\Downloads\\Root\\Coding\\Derby\\first\\firstdb1;create=true;user=bhavik;password=bhavik");
+			PreparedStatement ps = con.prepareStatement("DELETE FROM facebookuser WHERE email=? and password=?");
+			ps.setString(1, fp.getEmail());	
+			ps.setString(2, fp.getPassword());
+					
+			status = ps.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return status;
 	}
 
 	public int editProfile(FacebookProfile fp) {

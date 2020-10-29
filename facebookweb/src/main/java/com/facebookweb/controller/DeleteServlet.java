@@ -11,33 +11,27 @@ import javax.servlet.http.HttpServletResponse;
 import com.facebookweb.entity.FacebookProfile;
 import com.facebookweb.service.Service;
 
-public class LoginServlet extends HttpServlet {
-	
+public class DeleteServlet extends HttpServlet {
+
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		FacebookProfile fp = new FacebookProfile(null, email, password);
 		
-		FacebookProfile loggedProfile = Service.createObject().loginProfile(fp);
+		int status = Service.createObject().deleteProfile(fp);
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		if(loggedProfile != null) {
+		if(status > 0) {
 			//OK
 			out.println("<html><body>");
-			out.println("Welcome " + loggedProfile.getName() + ", you have successfully logged in...");
-			out.println("<br><br><hr>");
-			out.println("<form action=DeleteServlet>"
-					+ "<input type=hidden name=email value=" + email +" />"
-					+ "<input type=hidden name=password value=" + password +" />"
-					+ "<button type=submit>Delete profile</button></form>");
+			out.println("Your profile has been deleted successfully! Go to <a href=registration.html>Register</a> page.");
 			out.println("</body></html>");
 		}else {
 			//Error
 			out.println("<html><body>");
-			out.println("Login unsuccessful! Please try again...<a href=login.html>Login</a>");
+			out.println("Delete unsuccessful! Please try again...<a href=LoginServlet?email="+email+"&password="+password+">Home</a>");
 			out.println("</body></html>");
 		}
 	}

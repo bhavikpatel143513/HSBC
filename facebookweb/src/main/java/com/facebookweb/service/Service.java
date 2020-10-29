@@ -32,7 +32,7 @@ public class Service implements ServiceInterface {
 	}
 
 	public int deleteProfile(FacebookProfile fp) {
-		return 0;
+		return dao.deleteProfile(fp);
 	}
 
 	public int editProfile(FacebookProfile fp) {
