@@ -8,12 +8,7 @@
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd ">
 	
 	
-	<bean id="trainees" class="com.springcore.Trainees">
-	<property name="ti">
-			<ref bean="trainer"/>
-		</property>
-	</bean>
-	<bean id="trainer" class="com.springcore.Trainer">
-	</bean>
+	<ctx:annotation-config></ctx:annotation-config>
+	<ctx:component-scan base-package="com.springcore"></ctx:component-scan>
 	
 </beans>

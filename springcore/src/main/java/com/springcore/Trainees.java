@@ -1,9 +1,16 @@
 package com.springcore;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Component;
 
+
+@Component("trainees")
 public class Trainees {
 	
+	@Autowired
+	@Qualifier("trainer1")
 	private TrainerInterface ti;
 	
 	public void print() {
