@@ -12,5 +12,6 @@ public interface ServiceInterface {
 	public ArrayList<FacebookProfile> viewAllProfile();
 	public int deleteProfile(FacebookProfile fp);
 	public int editProfile(FacebookProfile fp);
+	public FacebookProfile loginProfile(FacebookProfile newProfile);
 
 }

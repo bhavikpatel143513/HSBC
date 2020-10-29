@@ -10,39 +10,31 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.facebookweb.entity.FacebookProfile;
 import com.facebookweb.service.Service;
-import com.facebookweb.service.ServiceInterface;
 
-/**
- * Servlet implementation class RegistrationServlet
- */
-public class RegistrationServlet extends HttpServlet {	
-
-	@Override
+public class LoginServlet extends HttpServlet {
+	
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		FacebookProfile newProfile = new FacebookProfile(name, email, password);
+		FacebookProfile newProfile = new FacebookProfile(null, email, password);
 		
-		int status = Service.createObject().createProfile(newProfile);
+		FacebookProfile loggedProfile = Service.createObject().loginProfile(newProfile);
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		if(status>0) {
+		if(loggedProfile != null) {
 			//OK
 			out.println("<html><body>");
-			out.println("Hello " + name + ", you have successfully registered! <a href=login.html>Login</a>");
+			out.println("Welcome " + loggedProfile.getName() + ", you have successfully logged in...");
 			out.println("</body></html>");
 		}else {
 			//Error
 			out.println("<html><body>");
-			out.println("Registration unsuccessful! Please try again...<a href=registration.html>Register</a>");
+			out.println("Login unsuccessful! Please try again...<a href=login.html>Login</a>");
 			out.println("</body></html>");
 		}
 	}
-
-	
 
 }

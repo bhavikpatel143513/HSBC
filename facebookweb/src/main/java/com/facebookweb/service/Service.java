@@ -39,4 +39,8 @@ public class Service implements ServiceInterface {
 		return 0;
 	}
 
+	public FacebookProfile loginProfile(FacebookProfile newProfile) {
+		return dao.loginProfile(newProfile);
+	}
+
 }

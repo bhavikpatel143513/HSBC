@@ -12,5 +12,6 @@ public interface DAOInterface {
 	public ArrayList<FacebookProfile> searchProfile(FacebookProfile fp);
 	public int deleteProfile(FacebookProfile fp);
 	public int editProfile(FacebookProfile fp);
+	public FacebookProfile loginProfile(FacebookProfile fp);
 
 }
