@@ -11,40 +11,39 @@ import javax.servlet.http.HttpServletResponse;
 import com.facebookweb.entity.FacebookProfile;
 import com.facebookweb.service.Service;
 
-public class LoginServlet extends HttpServlet {
-	
+
+public class ViewServlet extends HttpServlet {
+
+	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		FacebookProfile fp = new FacebookProfile(null, email, password);
 		
-		FacebookProfile loggedProfile = Service.createObject().loginProfile(fp);
+		fp = Service.createObject().viewProfile(fp);
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		if(loggedProfile != null) {
+		if(fp != null) {
 			//OK
 			out.println("<html><body>");
-			out.println("Welcome " + loggedProfile.getName() + ", you have successfully logged in...");
-			out.println("<br><br><hr>");
-			out.println("<form action=DeleteServlet>"
-					+ "<input type=hidden name=email value=" + email +" />"
-					+ "<input type=hidden name=password value=" + password +" />"
-					+ "<button type=submit>Delete profile</button></form>");
+			out.println("Your profile data is here:");
 			out.println("<br>");
-			out.println("<form action=ViewServlet>"
-					+ "<input type=hidden name=email value=" + email +" />"
-					+ "<input type=hidden name=password value=" + password +" />"
-					+ "<button type=submit>View profile</button></form>");
+			out.println("<br>Name = " + fp.getName());
+			out.println("<br>Email = " + fp.getEmail());
+			out.println("<br>Password = " + fp.getPassword());
+			out.println("<br>");
+			out.println("Go to <a href=LoginServlet?email="+email+"&password="+password+">Home</a>");
 			out.println("</body></html>");
 		}else {
 			//Error
 			out.println("<html><body>");
-			out.println("Login unsuccessful! Please try again...<a href=login.html>Login</a>");
+			out.println("View unsuccessful! Please try again...<a href=LoginServlet?email="+email+"&password="+password+">Home</a>");
 			out.println("</body></html>");
 		}
 	}
+	
+    
 
 }

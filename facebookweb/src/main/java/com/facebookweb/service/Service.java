@@ -20,7 +20,7 @@ public class Service implements ServiceInterface {
 	}
 
 	public FacebookProfile viewProfile(FacebookProfile fp) {
-		return null;
+		return dao.viewProfile(fp);
 	}
 
 	public ArrayList<FacebookProfile> searchProfile(FacebookProfile fp) {

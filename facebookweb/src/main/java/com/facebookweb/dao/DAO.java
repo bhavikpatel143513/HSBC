@@ -43,40 +43,38 @@ public class DAO implements DAOInterface{
 	}
 
 	public FacebookProfile viewProfile(FacebookProfile fp) {
-		return null;
-	}
-	
-	public static void main(String[] args) {
-		
-
-		ArrayList<FacebookProfile> fpList = new ArrayList<FacebookProfile>();
 		Connection con = null;
+		boolean status = false;
 		
 		try {
-			
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-			System.out.println("FOUND!!!");
-			
 			con = DriverManager.getConnection("jdbc:derby:C:\\Users\\bhavi\\Downloads\\Root\\Coding\\Derby\\first\\firstdb1;create=true;user=bhavik;password=bhavik");
-			PreparedStatement ps = con.prepareStatement("SELECT * FROM facebookuser");
+			PreparedStatement ps = con.prepareStatement("SELECT * FROM facebookuser WHERE email=? and password=?");
+			ps.setString(2, fp.getPassword());
+			ps.setString(1, fp.getEmail());	
+			
+			
 			ResultSet resultSet = ps.executeQuery();
-			
 			while (resultSet.next()) {
-
-				String name = resultSet.getString("NAME");
-			    String email = resultSet.getString("EMAIL");
-			    String password = resultSet.getString("PASSWORD");       
-			    fpList.add(new FacebookProfile(name,email,password));
+				status = true;
+				String name = resultSet.getString("NAME");    
+			    fp.setName(name);
+			    break;
 			}
 			
-			for(FacebookProfile list:fpList) {
-				System.out.println(list.getEmail());
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		}finally {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+		if(status)return fp;
+		else return null;
 	}
-
+	
 	public ArrayList<FacebookProfile> viewAllProfile() {
 		ArrayList<FacebookProfile> fpList = new ArrayList<FacebookProfile>();
 		Connection con = null;

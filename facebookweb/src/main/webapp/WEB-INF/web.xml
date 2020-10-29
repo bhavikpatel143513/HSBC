@@ -28,6 +28,12 @@
   	<description></description>
   	<servlet-class>com.facebookweb.controller.DeleteServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ViewServlet</servlet-name>
+  	<display-name>ViewServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.facebookweb.controller.ViewServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>RegistrationServlet</servlet-name>
   	<url-pattern>/RegistrationServlet</url-pattern>
@@ -43,5 +49,9 @@
   <servlet-mapping>
   	<servlet-name>DeleteServlet</servlet-name>
   	<url-pattern>/DeleteServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ViewServlet</servlet-name>
+  	<url-pattern>/ViewServlet</url-pattern>
   </servlet-mapping>
 </web-app>
