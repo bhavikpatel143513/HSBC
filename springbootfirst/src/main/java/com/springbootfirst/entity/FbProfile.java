@@ -1,11 +1,11 @@
 package com.springbootfirst.entity;
 
-public class Employee {
+public class FbProfile {
 	
 	private String name;
 	private String email;
 	private String password;
-	public Employee(String name, String email, String password) {
+	public FbProfile(String name, String email, String password) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -31,4 +31,5 @@ public class Employee {
 	}
 	
 	
+
 }
