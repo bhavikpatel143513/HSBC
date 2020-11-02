@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -39,7 +40,7 @@ public class ConsumerController {
 		System.out.println(response.getBody());
 	}
 	
-	@PostMapping("consumeCreateProfile")
+	@RequestMapping(value = "/consumeCreateProfile", method = RequestMethod.POST)
 	public void consumeCreateProfile(@RequestBody FbProfile profile) {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
@@ -58,41 +59,36 @@ public class ConsumerController {
 		
 	}
 	
-	@RequestMapping("consumeEditProfile")
-	public void consumeEditProfile() {
-		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> responseEntity = null;
-		
-		HttpHeaders headers = new HttpHeaders();
-	    headers.setContentType(MediaType.APPLICATION_JSON);
-	    String name = "ccc";
-	    String email = "cc@gmail.com";
-	    String password = "pass@cc";
-		HttpEntity<String> request = new HttpEntity<String>("{\"name\":\""+name+"\",\"email\":\""+email+"\",\"password\":\""+password+"\"}", headers);
-		
-		try {
-			responseEntity = restTemplate.exchange("http://localhost:8080/editProfile", HttpMethod.PUT , request, String.class);
-		}catch(Exception e) {
-			System.out.println(e);
-		}
-		System.out.println(responseEntity.getBody());
-	}
-	
-	@RequestMapping("consumeDeleteProfile")
-	public void consumeDeleteProfile() {
+	@RequestMapping(value = "/consumeEditProfile", method = RequestMethod.POST)
+	public void consumeEditProfile(@RequestBody FbProfile profile) {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
 		
 		HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
 	    
-	    String name = "cc";
-	    String email = "cc@gmail.com";
-	    String password = "pass@cc";
-		HttpEntity<String> request = new HttpEntity<String>("{\"name\":\""+name+"\",\"email\":\""+email+"\",\"password\":\""+password+"\"}", headers);
-		
+	    HttpEntity<FbProfile> entity = new HttpEntity<FbProfile>(profile, headers);
+	    
 		try {
-			responseEntity = restTemplate.exchange("http://localhost:8080/deleteProfile", HttpMethod.DELETE , request, String.class);
+			responseEntity = restTemplate.exchange("http://localhost:8080/editProfile", HttpMethod.PUT , entity, String.class);
+		}catch(Exception e) {
+			System.out.println(e);
+		}
+		System.out.println(responseEntity.getBody());
+	}
+	
+	@RequestMapping(value = "/consumeDeleteProfile", method = RequestMethod.POST)
+	public void consumeDeleteProfile(@RequestBody FbProfile profile) {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responseEntity = null;
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.setContentType(MediaType.APPLICATION_JSON);
+	    
+	    HttpEntity<FbProfile> entity = new HttpEntity<FbProfile>(profile, headers);
+	    
+		try {
+			responseEntity = restTemplate.exchange("http://localhost:8080/deleteProfile", HttpMethod.DELETE , entity, String.class);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
