@@ -26,21 +26,21 @@ public class FbController {
 		else return "Unsuccessful!! Please try again!!";
 	}
 	
-	@PostMapping("deleteProfile")
+	@DeleteMapping("deleteProfile")
 	public String deleteProfile(@RequestBody FbProfile fp) {
 		int status = fbService.deleteProfile(fp);
 		if(status > 0) return "Successfully deleted profile!!";
 		else return "Unsuccessful!! Please try again!!";
 	}
 	
-	@PostMapping("editProfile")
+	@PutMapping("editProfile")
 	public String editProfile(@RequestBody FbProfile fp) {
 		int status = fbService.editProfile(fp);
 		if(status > 0) return "Successfully edited profile!!";
 		else return "Unsuccessful, Invalid Email and password!! Please try again!!";
 	}
 	
-	@PostMapping("viewAllProfile")
+	@GetMapping("viewAllProfile")
 	public ArrayList<FbProfile> viewAllProfile() {
 		ArrayList<FbProfile> list = fbService.viewAllProfile();
 		if(list == null) {
