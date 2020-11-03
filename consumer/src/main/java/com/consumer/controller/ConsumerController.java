@@ -2,8 +2,11 @@ package com.consumer.controller;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,10 +22,17 @@ import org.springframework.web.client.RestTemplate;
 
 import com.consumer.entity.FbProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.discovery.DiscoveryClient;
 
 @RestController
 public class ConsumerController { 
+	
+	String baseUrl;
+	
+	public ConsumerController() {
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
+		ServiceInstance instance = serviceInstances.get(0);
+		baseUrl = instance.getUri().toString();
+	}
 	
 	@Autowired
 	private DiscoveryClient discoveryClient;
@@ -37,7 +47,7 @@ public class ConsumerController {
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response=null;
 		try{
-		response=restTemplate.exchange("http://localhost:8080/viewAllProfile",HttpMethod.GET, getHttpEntity(),String.class);
+		response=restTemplate.exchange(baseUrl+"/viewAllProfile",HttpMethod.GET, getHttpEntity(),String.class);
 		}catch (Exception ex)
 		{
 			System.out.println(ex);
@@ -56,7 +66,7 @@ public class ConsumerController {
 	    HttpEntity<FbProfile> entity = new HttpEntity<FbProfile>(profile,headers);
 	    
 		try {
-			responseEntity = restTemplate.exchange("http://localhost:8080/createProfile", HttpMethod.POST , entity, String.class);
+			responseEntity = restTemplate.exchange(baseUrl+"/createProfile", HttpMethod.POST , entity, String.class);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
@@ -75,7 +85,7 @@ public class ConsumerController {
 	    HttpEntity<FbProfile> entity = new HttpEntity<FbProfile>(profile, headers);
 	    
 		try {
-			responseEntity = restTemplate.exchange("http://localhost:8080/editProfile", HttpMethod.PUT , entity, String.class);
+			responseEntity = restTemplate.exchange(baseUrl+"/editProfile", HttpMethod.PUT , entity, String.class);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
@@ -93,7 +103,7 @@ public class ConsumerController {
 	    HttpEntity<FbProfile> entity = new HttpEntity<FbProfile>(profile, headers);
 	    
 		try {
-			responseEntity = restTemplate.exchange("http://localhost:8080/deleteProfile", HttpMethod.DELETE , entity, String.class);
+			responseEntity = restTemplate.exchange(baseUrl+"/deleteProfile", HttpMethod.DELETE , entity, String.class);
 		}catch(Exception e) {
 			System.out.println(e);
 		}
