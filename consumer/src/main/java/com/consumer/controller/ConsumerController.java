@@ -26,12 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 public class ConsumerController { 
 	
-	String baseUrl;
 	
 	public ConsumerController() {
-		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
-		ServiceInstance instance = serviceInstances.get(0);
-		baseUrl = instance.getUri().toString();
+		
 	}
 	
 	@Autowired
@@ -44,6 +41,10 @@ public class ConsumerController {
 	
 	@RequestMapping("consumeViewAllProfile")
 	public void consumeViewAllProfile() {
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
+		ServiceInstance instance = serviceInstances.get(0);
+		String baseUrl = instance.getUri().toString();
+		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response=null;
 		try{
@@ -57,6 +58,11 @@ public class ConsumerController {
 	
 	@RequestMapping(value = "/consumeCreateProfile", method = RequestMethod.POST)
 	public void consumeCreateProfile(@RequestBody FbProfile profile) {
+		
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
+		ServiceInstance instance = serviceInstances.get(0);
+		String baseUrl = instance.getUri().toString();
+		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
 		
@@ -76,6 +82,11 @@ public class ConsumerController {
 	
 	@RequestMapping(value = "/consumeEditProfile", method = RequestMethod.POST)
 	public void consumeEditProfile(@RequestBody FbProfile profile) {
+		
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
+		ServiceInstance instance = serviceInstances.get(0);
+		String baseUrl = instance.getUri().toString();
+		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
 		
@@ -94,6 +105,12 @@ public class ConsumerController {
 	
 	@RequestMapping(value = "/consumeDeleteProfile", method = RequestMethod.POST)
 	public void consumeDeleteProfile(@RequestBody FbProfile profile) {
+		
+		List<ServiceInstance> serviceInstances = discoveryClient.getInstances("producer");
+		ServiceInstance instance = serviceInstances.get(0);
+		String baseUrl = instance.getUri().toString();
+		
+		
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> responseEntity = null;
 		
