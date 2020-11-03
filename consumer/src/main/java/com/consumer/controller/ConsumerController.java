@@ -3,6 +3,7 @@ package com.consumer.controller;
 import java.io.IOException;
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -18,9 +19,13 @@ import org.springframework.web.client.RestTemplate;
 
 import com.consumer.entity.FbProfile;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.netflix.discovery.DiscoveryClient;
 
 @RestController
-public class ConsumerController {
+public class ConsumerController { 
+	
+	@Autowired
+	private DiscoveryClient discoveryClient;
 	
 	@RequestMapping("hello")
 	public void hello() {
