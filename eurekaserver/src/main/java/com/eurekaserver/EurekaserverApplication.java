@@ -1,12 +1,13 @@
-package com.springbootfirst;
+package com.eurekaserver;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringbootfirstApplication {
+public class EurekaserverApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringbootfirstApplication.class, args);
+		SpringApplication.run(EurekaserverApplication.class, args);
 	}
+
 }
