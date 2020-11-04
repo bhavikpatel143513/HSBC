@@ -1,0 +1,141 @@
+
+Guthub:  https://github.com/upadhyay-rajesh/hsbc_ad.git
+Mobile No: 9886345721
+Mail:    Upadhyay.rajesh@rediffmail.com
+
+DATABASE
+Creade new Database: connect 'jdbc:derby:C:\Users\bhavi\Downloads\Root\Coding\Derby\first\firstdb1;create=true;user=bhavik;password=bhavik';
+Create Table : create table facebookuser(name varchar(20), email varchar(34), password varchar(15));
+Show table:    describe facebookuser;
+Insert: insert into facebookuser values('rajesh','rajesh@gmail.com','pass@rajesh');
+Show table rows: select * from facebookuser;
+Update :   update facebookuser set name='bhavik' where name='rajesh';
+
+
+connect using the project
+step 1: load driver
+Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+step 2: connection with database
+Connection con=DriverManager.getConnection("jdbc:derby:C:\Users\bhavi\Downloads\Root\Coding\Derby\first\firstdb1;create=true;user=bhavik;password=bhavik");
+step 3: create query
+PreparedStatement ps = con.prepareStatement("insert into facebookuser values(?,?,?)");
+ps.setString(1, fp.getName());
+ps.setString(2, fp.getEmail());
+ps.setString(3, fp.getPassword());
+step 4: execute query
+int i = ps.executeUpdate();
+
+
+
+28/10
+
+MAVEN webapp
+Using Servlet
+
+public class RegistrationServlet extends HttpServlet {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String name=request.getParameter("name");
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.println("<html><body>");
+			out.println("name is "+name);
+		out.println("</body></html>");
+	}
+}
+
+
+29/10
+
+Spring Core
+Bean Factory and Application Context Factory
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Trainees {
+	private TrainerInterface ti;
+	public void setTi(TrainerInterface ti) {  //adapter
+		this.ti = ti;
+	}
+	public void print() {
+		ti.teach();
+	}
+
+	public static void main(String[] args) {
+		
+		ClassPathXmlApplicationContext ctx=new ClassPathXmlApplicationContext("abc.xml");
+		Trainees t=(Trainees)ctx.getBean("tp");
+		
+	//	Trainees t=new Trainees();
+		
+	//	TrainerInterface tt=new Trainer();
+	//	t.setTi(tt);           //dependency injection
+		t.print();
+
+	}
+
+}
+	<bean id="ta" class="com.springcore.Trainer">
+	</bean>
+	
+	<bean id="tp" class="com.springcore.Trainees">
+		<property name="ti">
+			<ref bean="ta"/>
+		</property>
+	</bean>
+
+
+30/10
+
+Spring Boot
+@Component("")
+@RestController class
+@RequestMapping("") method
+@GetMapping method
+@PostMapping method
+@PutMappint method
+@DeleteMapping method
+@RequestBody parameter
+@Autowire method
+@Qualifier("")
+
+2/11
+
+import java.io.IOException;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+@RestController
+public class ConsumerController {
+	@RequestMapping("ccc")
+	public void consume() {
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> response=null;
+		try{
+		response=restTemplate.exchange("http://localhost:10000/employeelist",HttpMethod.GET, abc(),String.class);
+		}catch (Exception ex)
+		{
+			System.out.println(ex);
+		}
+		System.out.println(response.getBody());
+	}
+	private HttpEntity abc() throws IOException {
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("Accept", MediaType.APPLICATION_JSON_VALUE);
+		return new HttpEntity(headers);
+	}
+
+@RequestMapping(value = "/template/products", method = RequestMethod.POST)
+   public String createProducts(@RequestBody Product product) {
+      HttpHeaders headers = new HttpHeaders();
+      headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+      HttpEntity<Product> entity = new HttpEntity<Product>(product,headers);
+      
+      return restTemplate.exchange(
+         "http://localhost:8080/products", HttpMethod.POST, entity, String.class).getBody();
+   }
